@@ -1,6 +1,6 @@
 'use strict';
 const
-  zmq = require('zmq'),
+  zmq = require('zeromq'),
   publisher = zmq.socket('pub');
 
 // Send a beacon message to any subscribers.
@@ -16,4 +16,3 @@ setInterval(function() {
 publisher.bind('tcp://*:5432', function(err) {
   console.log('Listening for zmq subscribers...');
 });
-
