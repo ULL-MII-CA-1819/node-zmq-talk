@@ -5,7 +5,7 @@ const
 
 requester.on("message", function(data) {
   let response = JSON.parse(data);
-  console.log("Response from " + response.pid + ': ' +
+  console.log("Response from worker["+response.id+"] pid=" + response.pid + ': ' +
       new Date(response.timestamp));
 });
 
@@ -15,4 +15,3 @@ console.log('Sending request for time.');
 requester.send(JSON.stringify({
   pid: process.pid
 }));
-

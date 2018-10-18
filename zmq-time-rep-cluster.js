@@ -16,13 +16,13 @@ if (cluster.isMaster) {
     dealer = zmq.socket('dealer').bind(workerEndpoint);
 
   // Forward messages between router and dealer.
-  router.on('message', function() {
-    let frames = Array.prototype.slice.call(arguments);
+  router.on('message', function(...frames) {
+    // let frames = Array.prototype.slice.call(arguments);
     dealer.send(frames);
   });
 
-  dealer.on('message', function() {
-    let frames = Array.prototype.slice.call(arguments);
+  dealer.on('message', function(...frames) {
+    //let frames = Array.prototype.slice.call(arguments);
     router.send(frames);
   });
 
@@ -45,10 +45,11 @@ if (cluster.isMaster) {
 
     // Parse incoming message.
     let request = JSON.parse(data);
-    console.log(process.pid + ' received request from: ' + request.pid);
+    console.log('Worker ',cluster.worker.id+' with pid '+process.pid + ' received request from: ' + request.pid);
 
     // Issue reply.
     responder.send(JSON.stringify({
+      id: cluster.worker.id,
       pid: process.pid,
       timestamp: Date.now()
     }));
