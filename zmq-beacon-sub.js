@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 const
   zmq = require('zeromq'),
   subscriber = zmq.socket('sub');
